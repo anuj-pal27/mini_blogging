@@ -1,7 +1,50 @@
 <div class="container py-4">
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h1 class="mb-0">Posts</h1>
-    <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "btn btn-outline-danger" %>
+    <div>
+      <% if user_signed_in? %>
+        <%= link_to "Dashboard", dashboard_path, class: "btn btn-outline-info me-2" %>
+        <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "btn btn-outline-danger" %>
+      <% else %>
+        <%= link_to "Sign In", new_user_session_path, class: "btn btn-outline-primary" %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="card mb-4">
+    <div class="card-body">
+      <%= form_with url: posts_path, method: :get, local: true, class: "row g-3 align-items-end" do |f| %>
+        <div class="col-md-4">
+          <%= f.label :q, "Search", class: "form-label" %>
+          <%= f.text_field :q, value: params[:q], class: "form-control", placeholder: "Title or content..." %>
+        </div>
+        <div class="col-md-2">
+          <%= f.label :status, "Status", class: "form-label" %>
+          <%= f.select :status, options_for_select([['All', ''], ['Published', 'published'], ['Draft', 'draft']], params[:status]), {}, class: "form-select" %>
+        </div>
+        <% if user_signed_in? %>
+          <div class="col-md-2">
+            <%= f.label :own, "My Posts Only", class: "form-label" %>
+            <div class="form-check">
+              <%= f.check_box :own, { checked: params[:own].present?, class: "form-check-input" }, '1', '0' %>
+              <%= f.label :own, "Show only my posts", class: "form-check-label" %>
+            </div>
+          </div>
+        <% end %>
+        <div class="col-md-2">
+          <%= f.label :from, "From", class: "form-label" %>
+          <%= f.date_field :from, value: params[:from], class: "form-control" %>
+        </div>
+        <div class="col-md-2">
+          <%= f.label :to, "To", class: "form-label" %>
+          <%= f.date_field :to, value: params[:to], class: "form-control" %>
+        </div>
+        <div class="col-md-12 mt-2">
+          <%= f.submit "Filter", class: "btn btn-primary me-2" %>
+          <%= link_to "Clear", posts_path, class: "btn btn-outline-secondary btn-sm" %>
+        </div>
+      <% end %>
+    </div>
   </div>
 
   <% if notice %>
@@ -19,14 +62,16 @@
             <h5 class="card-title"><%= post.title %></h5>
             <p class="card-text text-truncate"><%= post.body %></p>
             <%= link_to "Show", post, class: "btn btn-sm btn-primary me-2" %>
-            <%= link_to "Edit", edit_post_path(post), class: "btn btn-sm btn-outline-secondary" %>
+            <%= link_to "Edit", edit_post_path(post), class: "btn btn-sm btn-outline-secondary" if user_signed_in? && post.user == current_user %>
           </div>
         </div>
       </div>
     <% end %>
   </div>
 
-  <div class="mt-4">
-    <%= link_to "New post", new_post_path, class: "btn btn-success" %>
-  </div>
+  <% if user_signed_in? %>
+    <div class="mt-4">
+      <%= link_to "New post", new_post_path, class: "btn btn-success" %>
+    </div>
+  <% end %>
 </div>

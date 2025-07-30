@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   authenticated :user do
     root to: 'posts#index', as: :authenticated_root
+    get 'dashboard', to: 'posts#dashboard', as: :dashboard
   end
 
   devise_scope :user do
