@@ -8,3 +8,111 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+
+/* THEME: Modern blue/purple gradient, soft cards, beautiful buttons */
+.theme-bg {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.text-primary {
+  color: #667eea !important;
+}
+
+.bg-gradient-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  color: #fff !important;
+}
+
+.card, .card-body, .card-header {
+  border-radius: 1.25rem !important;
+}
+
+.btn, .form-control, .form-select {
+  border-radius: 2rem !important;
+  transition: all 0.2s;
+}
+
+.btn-primary, .btn-success {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+}
+
+.btn-primary:hover, .btn-success:hover {
+  background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+}
+
+.btn-outline-info {
+  color: #667eea;
+  border-color: #667eea;
+}
+.btn-outline-info:hover {
+  background: #667eea;
+  color: #fff;
+}
+
+.btn-outline-danger {
+  color: #dc3545;
+  border-color: #dc3545;
+}
+.btn-outline-danger:hover {
+  background: #dc3545;
+  color: #fff;
+}
+
+.btn-outline-primary {
+  color: #667eea;
+  border-color: #667eea;
+}
+.btn-outline-primary:hover {
+  background: #667eea;
+  color: #fff;
+}
+
+.btn-outline-secondary {
+  color: #6c757d;
+  border-color: #6c757d;
+}
+.btn-outline-secondary:hover {
+  background: #6c757d;
+  color: #fff;
+}
+
+.post-card-hover {
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.post-card-hover:hover {
+  box-shadow: 0 8px 32px rgba(102, 126, 234, 0.25);
+  transform: translateY(-4px) scale(1.02);
+}
+
+.bg-opacity-75 {
+  background-color: rgba(255,255,255,0.75) !important;
+}
+.bg-opacity-90 {
+  background-color: rgba(255,255,255,0.90) !important;
+}
+
+::-webkit-input-placeholder { color: #b0b3c6; }
+::-moz-placeholder { color: #b0b3c6; }
+:-ms-input-placeholder { color: #b0b3c6; }
+::placeholder { color: #b0b3c6; }
+
+.btn-gradient {
+  background: linear-gradient(135deg, #5a189a 0%, #667eea 100%) !important;
+  color: #fff !important;
+  border: none;
+}
+.btn-gradient:hover {
+  background: linear-gradient(135deg, #764ba2 0%, #5a189a 100%) !important;
+  color: #fff !important;
+}
+
+.btn-gradient-danger {
+  background: linear-gradient(135deg, #ff6b6b 0%, #dc3545 100%) !important;
+  color: #fff !important;
+  border: none;
+}
+.btn-gradient-danger:hover {
+  background: linear-gradient(135deg, #dc3545 0%, #b91d47 100%) !important;
+  color: #fff !important;
+}

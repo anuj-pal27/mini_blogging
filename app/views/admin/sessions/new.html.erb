@@ -1,0 +1,22 @@
+<div class="row justify-content-center mt-5">
+  <div class="col-12 col-md-6 col-lg-4">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h2 class="mb-4 text-center text-primary fw-bold">Admin Login</h2>
+        <%= form_with url: admin_login_path, method: :post, local: true do |f| %>
+          <div class="mb-3">
+            <%= label_tag :username, 'Username', class: 'form-label fw-semibold' %>
+            <%= text_field_tag :username, nil, class: 'form-control rounded-pill px-4', autofocus: true %>
+          </div>
+          <div class="mb-3">
+            <%= label_tag :password, 'Password', class: 'form-label fw-semibold' %>
+            <%= password_field_tag :password, nil, class: 'form-control rounded-pill px-4' %>
+          </div>
+          <div class="d-grid">
+            <%= f.submit 'Login', class: 'btn btn-primary btn-lg rounded-pill fw-bold' %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div> 

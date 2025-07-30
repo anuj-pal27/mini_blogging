@@ -1,0 +1,27 @@
+<h2 class="mb-4 text-info fw-bold">All Users</h2>
+<div class="table-responsive">
+  <table class="table table-hover align-middle shadow-sm bg-white rounded">
+    <thead class="table-info">
+      <tr>
+        <th>Email</th>
+        <th>Posts</th>
+        <th>Comments</th>
+        <th>Joined</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td class="fw-semibold"><%= user.email %></td>
+          <td><span class="badge bg-primary"><%= user.posts.count %></span></td>
+          <td><span class="badge bg-secondary"><%= user.comments.count %></span></td>
+          <td><%= user.created_at.strftime('%Y-%m-%d') %></td>
+          <td>
+            <%= button_to "Delete", admin_user_path(user), method: :delete, data: { confirm: "Delete this user?" }, class: "btn btn-sm btn-outline-danger rounded-pill" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div> 

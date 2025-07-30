@@ -1,11 +1,14 @@
 <div class="container py-4">
   <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1 class="mb-0">Post Details</h1>
-    <% if user_signed_in? %>
-      <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "btn btn-outline-danger" %>
-    <% else %>
-      <%= link_to "Sign In", new_user_session_path, class: "btn btn-outline-primary" %>
-    <% end %>
+    <h1 class="mb-0 fw-bold text-primary">Post Details</h1>
+    <div>
+      <% if user_signed_in? %>
+        <%= link_to "Dashboard", dashboard_path, class: "btn btn-outline-info me-2 rounded-pill" %>
+        <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "btn btn-outline-danger rounded-pill" %>
+      <% else %>
+        <%= link_to "Sign In", new_user_session_path, class: "btn btn-outline-primary rounded-pill" %>
+      <% end %>
+    </div>
   </div>
 
   <% if notice %>
@@ -23,9 +26,11 @@
 
   <div class="card shadow-sm mb-4">
     <div class="card-body">
-      <h3 class="card-title"><%= @post.title %></h3>
+      <h3 class="card-title fw-bold text-primary"><%= @post.title %></h3>
       <p class="card-text"><%= @post.body %></p>
-      <span class="badge bg-secondary">Status: <%= @post.status %></span>
+      <span class="badge <%= @post.status == 'published' ? 'bg-success' : 'bg-secondary' %>">
+        <%= @post.status.capitalize %>
+      </span>
       <div class="text-muted mt-2">
         <small>Created at: <%= @post.created_at.strftime('%Y-%m-%d %H:%M') %></small><br>
         <small>Updated at: <%= @post.updated_at.strftime('%Y-%m-%d %H:%M') %></small>
@@ -34,9 +39,11 @@
   </div>
 
   <div class="d-flex gap-2 mb-4">
-    <%= link_to "Edit this post", edit_post_path(@post), class: "btn btn-outline-primary" if user_signed_in? && @post.user == current_user %>
-    <%= link_to "Back to posts", posts_path, class: "btn btn-outline-secondary" %>
-    <%= button_to "Destroy this post", @post, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-outline-danger" if user_signed_in? && @post.user == current_user %>
+    <% if user_signed_in? && @post.user == current_user %>
+      <%= link_to "Edit this post", edit_post_path(@post), class: "btn btn-outline-primary rounded-pill" %>
+      <%= button_to "Destroy this post", @post, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-outline-danger rounded-pill" %>
+    <% end %>
+    <%= link_to "Back to posts", posts_path, class: "btn btn-outline-secondary rounded-pill" %>
   </div>
 
   <div class="card mb-4">
@@ -59,11 +66,11 @@
       <% if user_signed_in? %>
         <%= form_with(model: [@post, Comment.new], local: true) do |f| %>
           <div class="mb-3">
-            <%= f.label :body, "Add a comment", class: "form-label" %>
-            <%= f.text_area :body, class: "form-control", rows: 2, required: true %>
+            <%= f.label :body, "Add a comment", class: "form-label fw-semibold" %>
+            <%= f.text_area :body, class: "form-control rounded-pill px-4", rows: 2, required: true %>
           </div>
           <div class="d-grid">
-            <%= f.submit "Post Comment", class: "btn btn-primary btn-sm" %>
+            <%= f.submit "Post Comment", class: "btn btn-primary rounded-pill" %>
           </div>
         <% end %>
       <% else %>

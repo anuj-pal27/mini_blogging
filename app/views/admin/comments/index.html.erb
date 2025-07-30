@@ -1,0 +1,27 @@
+<h2 class="mb-4 text-secondary fw-bold">All Comments</h2>
+<div class="table-responsive">
+  <table class="table table-hover align-middle shadow-sm bg-white rounded">
+    <thead class="table-secondary">
+      <tr>
+        <th>Body</th>
+        <th>User</th>
+        <th>Post</th>
+        <th>Created</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @comments.each do |comment| %>
+        <tr>
+          <td><%= truncate(comment.body, length: 60) %></td>
+          <td><%= comment.user.email %></td>
+          <td><%= link_to comment.post.title, post_path(comment.post), class: 'text-decoration-none text-primary' %></td>
+          <td><%= comment.created_at.strftime('%Y-%m-%d') %></td>
+          <td>
+            <%= button_to "Delete", admin_comment_path(comment), method: :delete, data: { confirm: "Delete this comment?" }, class: "btn btn-sm btn-outline-danger rounded-pill" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div> 

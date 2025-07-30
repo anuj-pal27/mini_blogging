@@ -1,15 +1,34 @@
 <div class="container py-4">
   <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1 class="mb-0">My Posts Dashboard</h1>
-    <%= link_to "New Post", new_post_path, class: "btn btn-success" %>
+    <h1 class="mb-0 fw-bold text-primary">My Posts Dashboard</h1>
+    <%= link_to "New Post", new_post_path, class: "btn btn-primary rounded-pill px-4" %>
   </div>
+
+  <% if current_user.notifications.any? %>
+    <div class="mb-4">
+      <div class="alert alert-info shadow-sm">
+        <strong>Notifications:</strong>
+        <ul class="mb-0 ps-3">
+          <% current_user.notifications.order(created_at: :desc).limit(10).each do |notification| %>
+            <li>
+              <%= notification.message %>
+              <% if notification.post %>
+                <%= link_to '(View Post)', post_path(notification.post), class: 'ms-2' %>
+              <% end %>
+              <span class="text-muted small ms-2"><%= notification.created_at.strftime('%Y-%m-%d %H:%M') %></span>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
 
   <% if @posts.empty? %>
     <div class="alert alert-info">You have not created any posts yet.</div>
   <% else %>
     <div class="table-responsive">
-      <table class="table table-hover align-middle">
-        <thead class="table-light">
+      <table class="table table-hover align-middle shadow-sm bg-white rounded">
+        <thead class="table-primary">
           <tr>
             <th>Title</th>
             <th>Status</th>
@@ -22,7 +41,7 @@
         <tbody>
           <% @posts.each do |post| %>
             <tr>
-              <td><%= link_to post.title, post %></td>
+              <td class="fw-semibold"><%= link_to post.title, post, class: 'text-decoration-none text-primary' %></td>
               <td>
                 <% if post.status == 'published' %>
                   <span class="badge bg-success">Published</span>
@@ -34,8 +53,8 @@
               <td><%= truncate(post.body, length: 60) %></td>
               <td><%= post.created_at.strftime('%Y-%m-%d') %></td>
               <td>
-                <%= link_to "Edit", edit_post_path(post), class: "btn btn-sm btn-outline-primary me-1" %>
-                <%= button_to "Delete", post, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-sm btn-outline-danger" %>
+                <%= link_to "Edit", edit_post_path(post), class: "btn btn-sm btn-outline-primary rounded-pill me-1" %>
+                <%= button_to "Delete", post, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-sm btn-outline-danger rounded-pill" %>
               </td>
             </tr>
           <% end %>

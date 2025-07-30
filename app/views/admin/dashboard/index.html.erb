@@ -1,0 +1,15 @@
+<div class="row justify-content-center mt-5">
+  <div class="col-12 col-md-8 col-lg-6">
+    <div class="card shadow-sm">
+      <div class="card-body text-center">
+        <h2 class="mb-4 text-primary fw-bold">Welcome, Admin!</h2>
+        <p class="lead">Manage the site content below:</p>
+        <div class="d-grid gap-3">
+          <%= link_to 'Manage Posts', admin_posts_path, class: 'btn btn-outline-primary btn-lg rounded-pill' %>
+          <%= link_to 'Manage Users', admin_users_path, class: 'btn btn-outline-info btn-lg rounded-pill' %>
+          <%= link_to 'Manage Comments', admin_comments_path, class: 'btn btn-outline-secondary btn-lg rounded-pill' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 
