@@ -1,10 +1,70 @@
-<p style="color: green"><%= notice %></p>
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="mb-0">Post Details</h1>
+    <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "btn btn-outline-danger" %>
+  </div>
 
-<%= render @post %>
+  <% if notice %>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <%= notice %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  <% end %>
+  <% if alert %>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <%= alert %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  <% end %>
 
-<div>
-  <%= link_to "Edit this post", edit_post_path(@post) %> |
-  <%= link_to "Back to posts", posts_path %>
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <h3 class="card-title"><%= @post.title %></h3>
+      <p class="card-text"><%= @post.body %></p>
+      <span class="badge bg-secondary">Status: <%= @post.status %></span>
+      <div class="text-muted mt-2">
+        <small>Created at: <%= @post.created_at.strftime('%Y-%m-%d %H:%M') %></small><br>
+        <small>Updated at: <%= @post.updated_at.strftime('%Y-%m-%d %H:%M') %></small>
+      </div>
+    </div>
+  </div>
 
-  <%= button_to "Destroy this post", @post, method: :delete %>
+  <div class="d-flex gap-2 mb-4">
+    <%= link_to "Edit this post", edit_post_path(@post), class: "btn btn-outline-primary" if user_signed_in? && @post.user == current_user %>
+    <%= link_to "Back to posts", posts_path, class: "btn btn-outline-secondary" %>
+    <%= button_to "Destroy this post", @post, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-outline-danger" if user_signed_in? && @post.user == current_user %>
+  </div>
+
+  <div class="card mb-4">
+    <div class="card-header bg-light fw-bold">Comments (<%= @post.comments.count %>)</div>
+    <div class="card-body">
+      <% if @post.comments.any? %>
+        <% @post.comments.order(created_at: :asc).each do |comment| %>
+          <div class="mb-3 border-bottom pb-2">
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="fw-semibold"><%= comment.user.email %></span>
+              <span class="text-muted small"><%= comment.created_at.strftime('%Y-%m-%d %H:%M') %></span>
+            </div>
+            <div><%= comment.body %></div>
+          </div>
+        <% end %>
+      <% else %>
+        <p class="text-muted">No comments yet.</p>
+      <% end %>
+
+      <% if user_signed_in? %>
+        <%= form_with(model: [@post, Comment.new], local: true) do |f| %>
+          <div class="mb-3">
+            <%= f.label :body, "Add a comment", class: "form-label" %>
+            <%= f.text_area :body, class: "form-control", rows: 2, required: true %>
+          </div>
+          <div class="d-grid">
+            <%= f.submit "Post Comment", class: "btn btn-primary btn-sm" %>
+          </div>
+        <% end %>
+      <% else %>
+        <div class="alert alert-info mt-3">You must be logged in to comment.</div>
+      <% end %>
+    </div>
+  </div>
 </div>

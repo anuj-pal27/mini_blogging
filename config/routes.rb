@@ -1,9 +1,8 @@
 Rails.application.routes.draw do
-  resources :posts
   devise_for :users
 
   authenticated :user do
-    root to: 'dashboard#index', as: :authenticated_root
+    root to: 'posts#index', as: :authenticated_root
   end
 
   devise_scope :user do
@@ -12,5 +11,7 @@ Rails.application.routes.draw do
     end
   end
 
-  get 'dashboard', to: 'dashboard#index'
+  resources :posts, param: :slug do
+    resources :comments, only: [:create], param: :id
+  end
 end
