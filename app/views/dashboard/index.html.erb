@@ -1,0 +1,4 @@
+<%= button_to "Logout", destroy_user_session_path, method: :delete, class: "btn btn-primary" %>
+
+<h1>Welcome, <%= current_user.email %>!</h1>
+<p>This is your dashboard.</p>
